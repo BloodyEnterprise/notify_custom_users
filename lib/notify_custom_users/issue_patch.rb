@@ -11,10 +11,10 @@ module NotifyCustomUsers
       # find users selected in custom fields with type 'user'
       def custom_users
         custom_user_values = custom_field_values.select do |v|
-          v.custom_field.field_format == "user"
+          v.custom_field.field_format == "user" && Setting.plugin_notify_custom_users["notify_custom_fields-#{v.custom_field.id}"]
         end
         custom_user_ids = custom_user_values.map(&:value).flatten
-        custom_user_ids.reject! { |id| id.blank? }
+        custom_user_ids.reject! {|id| id.blank?}
         User.find(custom_user_ids)
       end
 
@@ -24,7 +24,7 @@ module NotifyCustomUsers
           custom_user_ids = []
           journal.details.each do |det|
             c_user_field = custom_field_values.detect do |v|
-              det.prop_key == v.custom_field_id.to_s && v.custom_field.field_format == 'user'
+              det.prop_key == v.custom_field_id.to_s && v.custom_field.field_format == 'user' && Setting.plugin_notify_custom_users["notify_custom_fields-#{v.custom_field.id}"]
             end
             custom_user_ids << det.old_value if c_user_field && det.old_value.present?
           end

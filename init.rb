@@ -21,4 +21,6 @@ Redmine::Plugin.register :notify_custom_users do
   url 'https://github.com/Restream/notify_custom_users'
   author_url 'http://github.com/Restream'
   requires_redmine :version_or_higher => '2.6.1'
+
+  settings :default => {}, :partial => 'settings/notify_custom_users'
 end

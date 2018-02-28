@@ -1,0 +1,13 @@
+<fieldset id="settings_notify_custom_fields">
+  <legend><%= l(:label_custom_field_plural) %></legend>
+  <% for custom_field in IssueCustomField.where(:field_format => "user") %>
+    <p>
+      <label>
+        <%= content_tag 'span', custom_field.name,
+                        :title => custom_field.description.presence,
+                        :class => custom_field.description.presence ? "field-description" : nil %>
+      </label>
+      <%= check_box_tag "settings[notify_custom_fields-#{custom_field.id}]", custom_field.id, @settings["notify_custom_fields-#{custom_field.id}"] %>
+    </p>
+  <% end %>
+</fieldset>
